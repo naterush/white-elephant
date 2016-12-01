@@ -1,0 +1,44 @@
+#Pseudo Code
+
+There will be 4 states the contract can be in: BeforeExchangeStarts, PuttingGiftsUnderTree, OpeningPresents, Finished
+
+BeforeExchangeStarts – Nothing can happen in the contract at this point in time except joining the list of players. 
+
+PuttingGiftsUnderTree – Gifts can be sent in during this time period
+
+OpeningPresents – First, the picking order is assigned. Then, the gifts are picked and stolen.
+
+Finished – Game ends. People can withdraw their tokens. 
+
+
+##modifier atState(_state)
+This will make sure a function can only be called during the appropriate time period. For example, you cannot try to withdraw the gift you receive before the game is Finished.
+
+##modifier timeTransitions()
+checks to see if the states should be updated. If they should be, calls nextState.
+
+##function nextState() internal
+Updates state. 
+
+##modifier isPlayer()
+Makes sure that the msg.sender is participating in the gift exchange. This is to make sure that people who did not give gifts cannot take any gifts.
+
+##function WhiteElephant(openingTime, GiftDrawlingTime, isPrivate) payable 
+The constructor. This sets up the gift exchange. The default state is set to BeforeExchangeStarts.  The time of the state transitions are set. If the isPrivate is set to true, then private game state is true. 
+
+##function inviteFriend(friendsAddress) 
+throws if the game is not private. If the game is private, allows this person to the list of players. 
+
+##function joinExchange()
+if the game is not private, then this function can be called by anyone who wants to join the gift exchange. It maps them to a list of players. 
+//I would like this to disappear in later versions of the dapp
+
+
+//must call token(address).approve(this, amount) for this function to work. 
+##function giveGift(tokenAddress, amount) isPlayer
+This allows a person to write to a mapping in this contract that keeps track of which tokens were given by which person. The tokens are kept track of.   
+
+
+
+
+
