@@ -35,10 +35,25 @@ if the game is not private, then this function can be called by anyone who wants
 
 
 //must call token(address).approve(this, amount) for this function to work. 
-##function giveGift(tokenAddress, amount) isPlayer
-This allows a person to write to a mapping in this contract that keeps track of which tokens were given by which person. The tokens are kept track of.   
+##function giveGift(tokenAddress, amount) isPlayer atState(OpeningPresents)
+This allows a person to write to a mapping in this contract that keeps track of which tokens were given by which person. The tokens are kept track of. 
+
+##modifier canUnwrapGift() {
+Checks to see that either a person has never previously unwrapped a gift, or that they have had their gift stolen. 
+}  
+
+##function unwrapGift(tokenAddress) isPlayer atState(OpeningPresents) {
+This allows you to take a gift and “unwrap” it. To simulate some of the random chance that occurs in this type of gift exchange – you can only pick the type of token that there is, not the size of the gift (as people may have given different sized)
+}
+
+##function stealGift(addressToStealFrom) isPlayer atState(OpeningPresents){
+If someone has previously unwrapped a gift or stolen a gift, you can choose to steal it from them. Be wary, someone can steal this gift from you too if they call this function after you. If you have your gift stolen from you, you can then unwrap a new gift right after.  
+}
+
+##function theHolidaysAreOver() {
+Transfers your gift into your possession. 
+}
 
 
-
-
-
+##function WhiteElephant(startTime, endTime, isOpen)
+The constructor. This will take a few inputs. It will allow you to set the starting and ending time for join-ability of the gift exchange (AKA, when is the gift exchange open). 
